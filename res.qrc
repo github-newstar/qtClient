@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../../share/chatHome.png</file>
+        <file>style/stylesheet.qss</file>
+        <file>res/chatHome.png</file>
+    </qresource>
+</RCC>
