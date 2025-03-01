@@ -30,5 +30,14 @@ enum ErrorCodes {
     ERR_NETWORK,    //net work error
 };
 
+enum TipErr {
+    TIP_SUCCESS = 0,
+    TIP_EMAIL_ERR = 1,
+    TIP_PWD_ERR = 2,
+    TIP_CONFIRM_ERR = 3,
+    TIP_VERIFY_ERR = 4,
+    TIP_USER_ERR = 5,
+};
+
 extern QString gate_url_prefix;
 #endif //GLOBAL_H

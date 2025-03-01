@@ -18,6 +18,8 @@ class RegisterDialog : public QDialog
 public:
     explicit RegisterDialog(QWidget *parent = nullptr);
     ~RegisterDialog();
+    void AddTipErr(TipErr te, QString tips);
+    void DelTipErr(TipErr te);
 
 private slots:
     void on_getBtn__clicked();
@@ -26,10 +28,16 @@ private slots:
     void on_confirmBtn__clicked();
 
 private:
+    bool checkUserValid();
+    bool checkEmailValid();
+    bool checkPwdValid();
+    bool checkConfirmValid();
+    bool checkVarifyValid();
     void initHttpHandlers();
     void showTip(const QString &msg, bool ok);
     Ui::RegisterDialog *ui;
     QMap<ReqId, std::function<void(const QJsonObject&)>> handlers_;
+    QMap<TipErr, QString> tips_errs_;
 };
 
 #endif // REGISTERDIALOG_H

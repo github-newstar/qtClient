@@ -41,17 +41,18 @@ set(TargetConfig "${CMAKE_SOURCE_DIR}/config.ii")
 # 指定目标配置文件
 
 # 将路径中的 / 转换为 Windows 风格的 \\
-string(REPLACE "/" "\\" TargetConfig ${TargetConfig})
+#string(REPLACE "/" "\\" TargetConfig ${TargetConfig})
 
 # 设置输出目录
 set(OutputDir "${CMAKE_BINARY_DIR}")
 
+if(NOT UNIX)
+    # 将路径中的 / 转换为 Windows 风格的 \\
+    string(REPLACE "/" "\\" TargetConfig ${TargetConfig})
+    string(REPLACE "/" "\\" OutputDir ${OutputDir})
 
-# 将路径中的 / 转换为 Windows 风格的 \\
- string(REPLACE "/" "\\" OutputDir ${OutputDir})
-
-# 执行复制命令
-add_custom_command(TARGET chatPro POST_BUILD
+    add_custom_command(TARGET chatPro POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${TargetConfig}" "${OutputDir}"
-)
+    )
+endif()
