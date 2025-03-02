@@ -39,12 +39,18 @@ LoginDialog::~LoginDialog()
 }
 
 bool LoginDialog::checkUserValid() {
-    auto user = ui->userEdit_->text();
-    if(user.isEmpty()){
-        AddTipErr(TipErr::TIP_USER_ERR, tr("用户名不能为空"));
+    //使用邮箱验证用户
+    //验证邮箱的地址正则表达式
+    auto email = ui->emailEdit_->text();
+    // 邮箱地址的正则表达式
+    QRegularExpression regex(R"((\w+)(\.|_)?(\w*)@(\w+)(\.(\w+))+)");
+    bool match = regex.match(email).hasMatch(); // 执行正则表达式匹配
+    if(!match){
+        //提示邮箱不正确
+        AddTipErr(TipErr::TIP_EMAIL_ERR, tr("邮箱地址不正确"));
         return false;
     }
-    
+    DelTipErr(TipErr::TIP_EMAIL_ERR);
     return true;
 }
 
@@ -84,11 +90,11 @@ void LoginDialog::on_loginBtn__clicked()
     if(!checkPwdValid()){
         return;
     }
-    auto user = ui->userEdit_->text();
+    auto email= ui->emailEdit_->text();
     auto pwd = ui->passEdit_->text();
 
     QJsonObject jsonObj;
-    jsonObj["user"] = user;
+    jsonObj["email"] = email;
     jsonObj["passwd"] = xorString(pwd);
     HttpMgr::GetInstance()->PostHttpReq(QUrl(gate_url_prefix+"/user_login"),
                                         jsonObj, ReqId::ID_LOGIN_USER,Modules::LOGINMOD);

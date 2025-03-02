@@ -103,7 +103,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QLabel" name="userLabel_">
+        <widget class="QLabel" name="emailLabel_">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -117,12 +117,12 @@
           </size>
          </property>
          <property name="text">
-          <string>用户</string>
+          <string>邮箱</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="userEdit_">
+        <widget class="QLineEdit" name="emailEdit_">
          <property name="enabled">
           <bool>true</bool>
          </property>
