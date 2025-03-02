@@ -67,6 +67,19 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
             
             qDebug() << "label clicked";
     });
+    
+    countDownTimer_ = new QTimer(this);
+
+    connect(countDownTimer_, &QTimer::timeout, this, [this] {
+        if (countDown_ == 0) {
+            countDownTimer_->stop();
+            emit sigSwitchLogin();
+            return;
+        }
+        countDown_--;
+        auto str = QString("注册成功，%1秒后自动跳转到登录界面").arg(countDown_);
+        ui->tip1_lab_->setText(str);
+    });
 }
 
 RegisterDialog::~RegisterDialog()
@@ -123,7 +136,7 @@ void RegisterDialog::on_getBtn__clicked()
     }
 }
 
-void RegisterDialog::slot_reg_mod_finish(ReqId id, QString res, ErrorCodes err, Modules mod) {
+void RegisterDialog::slot_reg_mod_finish(ReqId id, QString res, ErrorCodes err) {
     if (err != ErrorCodes::SUCCESS) {
         showTip(tr("网络请求失败"), false);
         return;
@@ -166,6 +179,7 @@ void RegisterDialog::initHttpHandlers() {
         showTip(tr("用户注册成功").arg(email), true);
         qDebug() << "user name is " << jsonObj["user"].toString();
         qDebug() << "email is "<< email;
+        ChangeTipPage();
     };
 }
 
@@ -256,9 +270,28 @@ bool RegisterDialog::checkConfirmValid() {
 bool RegisterDialog::checkVarifyValid() {
     auto varify = ui->verifyEdit_->text();
     if (varify.isEmpty()) {
-        AddTipErr(TipErr::TIP_VERIFY_ERR, tr("验证码不能为空"));
+        AddTipErr(TipErr::TIP_VARIFY_ERR, tr("验证码不能为空"));
         return false;
     }
-    DelTipErr(TipErr::TIP_VERIFY_ERR);
+    DelTipErr(TipErr::TIP_VARIFY_ERR);
     return true;
+}
+
+void RegisterDialog::ChangeTipPage(){
+    countDownTimer_->stop();
+    ui->stackedWidget->setCurrentWidget(ui->page_2);
+    countDown_ = 5;
+    countDownTimer_->start(1000);
+}
+void RegisterDialog::on_returnBtn__clicked()
+{
+    countDownTimer_->stop();
+    emit sigSwitchLogin();
+}
+
+void RegisterDialog::on_cancelBtn_clicked()
+{
+    countDownTimer_->stop();
+     emit sigSwitchLogin();
+
 }

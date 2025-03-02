@@ -16,12 +16,23 @@ enum ReqId {
     //get verify code
     ID_GET_VARIFY_CODE = 1001,
     //regiter user
-    ID_REQ_USER = 1002,
-    ID_REG_USER = 1003,
+    ID_REG_USER = 1002,
+    //重置密码
+    ID_RESET_PWD = 1003,
+    //用户登录
+    ID_LOGIN_USER = 1004,
+    //登录聊天服务器
+    ID_CHAT_LOGIN = 1005,
+    //登录聊天服务器回包
+    ID_CHAST_LOGIN_RSP = 1006,
 };
 
 enum Modules {
     REGISTERMOD = 0,
+    
+    RESETMOD = 1,
+    
+    LOGINMOD = 2,
 };
 
 enum ErrorCodes {
@@ -35,7 +46,7 @@ enum TipErr {
     TIP_EMAIL_ERR = 1,
     TIP_PWD_ERR = 2,
     TIP_CONFIRM_ERR = 3,
-    TIP_VERIFY_ERR = 4,
+    TIP_VARIFY_ERR = 4,
     TIP_USER_ERR = 5,
 };
 

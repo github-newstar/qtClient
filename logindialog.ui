@@ -73,17 +73,32 @@
       </widget>
      </item>
      <item>
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
+      <widget class="QWidget" name="widget_2" native="true">
+       <property name="minimumSize">
         <size>
-         <width>20</width>
+         <width>0</width>
          <height>40</height>
         </size>
        </property>
-      </spacer>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="login_tip_">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>登录信息</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -157,7 +172,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="forgetLabel_">
+        <widget class="ClickedLabel" name="forgetLabel_">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -299,6 +314,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ClickedLabel</class>
+   <extends>QLabel</extends>
+   <header>clickedlabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="res.qrc"/>
  </resources>
