@@ -39,7 +39,6 @@ set(RESOURCE res.qrc)
 target_link_libraries(chatPro PRIVATE Qt5::Widgets Qt5::Network)
 set(TargetConfig "${CMAKE_SOURCE_DIR}/config.ii")
 # 指定目标配置文件
-
 # 将路径中的 / 转换为 Windows 风格的 \\
 #string(REPLACE "/" "\\" TargetConfig ${TargetConfig})
 

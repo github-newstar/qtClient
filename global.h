@@ -39,5 +39,11 @@ enum TipErr {
     TIP_USER_ERR = 5,
 };
 
+enum ClickLbState {
+    NORMAL = 0,
+    SELECTED = 1
+};
+
+
 extern QString gate_url_prefix;
 #endif //GLOBAL_H

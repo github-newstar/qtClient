@@ -177,7 +177,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="passVisible_">
+            <widget class="ClickedLabel" name="passVisible_">
              <property name="minimumSize">
               <size>
                <width>20</width>
@@ -235,7 +235,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="confirmPassVisible_">
+            <widget class="ClickedLabel" name="confirmPassVisible_">
              <property name="minimumSize">
               <size>
                <width>20</width>
@@ -395,6 +395,11 @@
    <class>TimerBtn</class>
    <extends>QPushButton</extends>
    <header location="global">TimerBtn.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ClickedLabel</class>
+   <extends>QLabel</extends>
+   <header>clickedlabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

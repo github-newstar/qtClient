@@ -2,11 +2,13 @@
 #include "ui_registerdialog.h"
 #include "global.h"
 #include <QRegularExpression>
+#include <QDebug>
 #include <QJsonObject>
 #include "httpmgr.h"
 #include<QNetworkAccessManager>
 #include<QNetworkReply>
 #include "global.h"
+#include "clickedlabel.h"
 
 RegisterDialog::RegisterDialog(QWidget *parent) :
     QDialog(parent),
@@ -39,6 +41,32 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
     });
     ui->passVisible_->setCursor(Qt::PointingHandCursor);
     ui->confirmPassVisible_->setCursor(Qt::PointingHandCursor);
+    
+    ui->passVisible_->SetState("unvisible", "unvisible_hover","" ,
+        "visible", "visible_hover", "");
+    ui->confirmPassVisible_->SetState("unvisible", "unvisible_hover","" ,
+        "visible", "visible_hover", "");
+    
+    connect(ui->passVisible_, &ClickedLabel::clicked, this, [this] {
+            auto state = ui->passVisible_->GetState();
+            if(state == ClickLbState::NORMAL){
+                ui->passEdit_->setEchoMode(QLineEdit::Password);
+            }else{
+                ui->passEdit_->setEchoMode(QLineEdit::Normal);
+            }
+            
+            qDebug() << "label clicked";
+    });
+    connect(ui->confirmPassVisible_, &ClickedLabel::clicked, this, [this] {
+            auto state = ui->confirmPassVisible_->GetState();
+            if(state == ClickLbState::NORMAL){
+                ui->confirmPassEdit_->setEchoMode(QLineEdit::Password);
+            }else{
+                ui->confirmPassEdit_->setEchoMode(QLineEdit::Normal);
+            }
+            
+            qDebug() << "label clicked";
+    });
 }
 
 RegisterDialog::~RegisterDialog()
