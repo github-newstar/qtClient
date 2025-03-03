@@ -5,6 +5,7 @@
 #include <QUrl>
 #include <QRegExpValidator>
 #include "httpmgr.h"
+#include "tcpmgr.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -17,6 +18,12 @@ LoginDialog::LoginDialog(QWidget *parent) :
     
     initHandlers();
     connect(HttpMgr::GetInstance().get(), &HttpMgr::sig_login_mod_finish, this, &LoginDialog::slot_login_finish);
+    
+    //连接tcp连接请求和槽函数
+    QObject::connect(this, &LoginDialog::sig_connect_tcp, TcpMgr::GetInstance().get(), &TcpMgr::slot_tcp_connect);
+    
+    //连接tcpmgr的连接成功信号
+    connect(TcpMgr::GetInstance().get(), &TcpMgr::sig_con_success, this, &LoginDialog::slot_tcp_con_finish);
 }
 
 void LoginDialog::AddTipErr(TipErr te, QString tips) {
@@ -80,6 +87,12 @@ void LoginDialog::slot_forget_pwd()
     qDebug() << "forget pwd";
     emit switchReset();
 }
+bool LoginDialog::enableBtn(bool enabled)
+{
+    ui->loginBtn_->setEnabled(enabled);
+    ui->regBtn_->setEnabled(enabled);
+    return true;
+}
 
 void LoginDialog::on_loginBtn__clicked()
 {
@@ -90,6 +103,8 @@ void LoginDialog::on_loginBtn__clicked()
     if(!checkPwdValid()){
         return;
     }
+    //关闭按钮
+    enableBtn(false);
     auto email= ui->emailEdit_->text();
     auto pwd = ui->passEdit_->text();
 
@@ -120,8 +135,20 @@ void LoginDialog::initHandlers()
                 return;
             }
             auto user = obj["user"].toString();
-            showTip(tr("登录成功"), true);
-            qDebug() << "user is " << user;
+            
+            //发信号通知tcpMgr发送长连接
+            ServerInfo si;
+            si.Uid = obj["uid"].toInt();
+            si.Host = obj["host"].toString();
+            si.Port = obj["port"].toString();
+            si.Token = obj["token"].toString();
+            
+            
+            uid_ = si.Uid;
+            token_ = si.Token;
+            qDebug() << "user is " << user << "uid is " << si.Uid << " host is "
+            << si.Host << " port  is " << si.Port << " token is " << si.Token;
+            emit sig_connect_tcp(si);
     });
 }
 
@@ -146,4 +173,22 @@ void LoginDialog::slot_login_finish(ReqId id, QString res, ErrorCodes err)
     //调用对应的逻辑,根据id回调。
     handlers_[id](jsonDoc.object());
     return;
+}
+void LoginDialog::slot_tcp_con_finish(bool success){
+    if(success){
+        showTip(tr("聊天服务连接成功，正在登录..."),true);
+        QJsonObject jsonObj;
+        jsonObj["uid"] = uid_;
+        jsonObj["token"] = token_;
+  
+        QJsonDocument doc(jsonObj);
+        QString jsonString = doc.toJson(QJsonDocument::Indented);
+  
+        //发送tcp请求给chat server
+        TcpMgr::GetInstance()->sig_send_data(ReqId::ID_CHAT_LOGIN, jsonString);
+    }
+    else{
+        showTip(tr("网络错误"), false);
+        enableBtn(true);
+    }
 }
