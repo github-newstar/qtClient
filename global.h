@@ -55,6 +55,20 @@ enum ClickLbState {
     SELECTED = 1
 };
 
+enum ChatUIMode {
+    ChatMode = 0,
+    ContactMode = 1,
+    SearchMode = 2,
+};
+enum ListItemType{
+    CHAT_USER_ITEM, //聊天用户
+    COTACT_USER_ITEM,//联系人
+    SEARCH_USER_ITEM,//搜索到的用户
+    ADD_USER_TIP_ITEM,//提示添加用户
+    INVALID_ITEM,   //不可点击条目
+    GROUP_TIP_ITEM  //分组提示条目
+};
+
 struct ServerInfo{
     QString Host;
     QString Port;

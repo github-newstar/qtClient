@@ -2,12 +2,20 @@
 #define LISTITEMBASE_H
 
 #include <QObject>
+#include <QWidget>
+#include "global.h"
 
-class ListItemBase
+class ListItemBase : public QWidget
 {
     Q_OBJECT
 public:
-    ListItemBase();
+    explicit ListItemBase(QWidget *parent = nullptr);
+    void SetItemType(ListItemType itemType);
+    ListItemType GetItemType();
+private:
+    ListItemType itemType_;
+public slots:
+signals:
 };
 
 #endif // LISTITEMBASE_H

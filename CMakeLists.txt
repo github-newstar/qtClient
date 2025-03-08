@@ -28,13 +28,12 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED Network)
 file(GLOB CPP_SRC "./*.cpp")
 file(GLOB H_SRC "./*.h")
 file(GLOB UI_SRC "./*.ui")
-set(RESOURCE res.qrc)
 
   add_executable(chatPro
       ${CPP_SRC}
       ${H_SRC}
-      ${UI_SRC}
-      ${RESOURCE}  )
+      ${CHARPRO_UIS}
+      ${UI_SRC}  )
 
 target_link_libraries(chatPro PRIVATE Qt5::Widgets Qt5::Network)
 set(TargetConfig "${CMAKE_SOURCE_DIR}/config.ii")
@@ -54,4 +53,8 @@ if(NOT UNIX)
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${TargetConfig}" "${OutputDir}"
     )
+endif()
+
+if(NOT UNIX)
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR})
 endif()

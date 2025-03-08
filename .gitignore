@@ -3,3 +3,4 @@ build/
 cmake*/
 .clangd
 CMakeLists.txt.user
+CMakeLists.txt.user

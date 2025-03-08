@@ -24,6 +24,8 @@ LoginDialog::LoginDialog(QWidget *parent) :
     
     //连接tcpmgr的连接成功信号
     connect(TcpMgr::GetInstance().get(), &TcpMgr::sig_con_success, this, &LoginDialog::slot_tcp_con_finish);
+    //连接tcpmgr的登录失败信号
+    connect(TcpMgr::GetInstance().get(), &TcpMgr::sig_login_failed, this, &LoginDialog::slot_login_failed);
 }
 
 void LoginDialog::AddTipErr(TipErr te, QString tips) {
@@ -132,6 +134,7 @@ void LoginDialog::initHandlers()
             int error = obj["error"].toInt();
             if(error != ErrorCodes::SUCCESS){
                 showTip(tr("参数错误"), false);
+                enableBtn(true);
                 return;
             }
             auto user = obj["user"].toString();
@@ -156,6 +159,7 @@ void LoginDialog::slot_login_finish(ReqId id, QString res, ErrorCodes err)
 {
     if( err != ErrorCodes::SUCCESS){
         showTip(tr("网络错误"), false);
+        enableBtn(true);
         return;
     }
     // 解析 JSON 字符串,res需转化为QByteArray
@@ -163,10 +167,12 @@ void LoginDialog::slot_login_finish(ReqId id, QString res, ErrorCodes err)
     //json解析错误
     if(jsonDoc.isNull()){
         showTip(tr("json解析错误"),false);
+        enableBtn(true);
         return;
     }
     //json解析错误
     if(!jsonDoc.isObject()){
+        enableBtn(true);
         showTip(tr("json解析错误"),false);
         return;
     }
@@ -185,10 +191,16 @@ void LoginDialog::slot_tcp_con_finish(bool success){
         QString jsonString = doc.toJson(QJsonDocument::Indented);
   
         //发送tcp请求给chat server
-        TcpMgr::GetInstance()->sig_send_data(ReqId::ID_CHAT_LOGIN, jsonString);
+        emit TcpMgr::GetInstance()->sig_send_data(ReqId::ID_CHAT_LOGIN, jsonString);
     }
     else{
         showTip(tr("网络错误"), false);
         enableBtn(true);
     }
+}
+
+void LoginDialog::slot_login_failed(int err) {
+    QString result = QString("登录失败，错误码：%1").arg(err);
+    showTip(result, false);
+    enableBtn(true);
 }

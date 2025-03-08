@@ -1,4 +1,5 @@
 #include "tcpmgr.h"
+#include "usermgr.h"
 #include <QAbstractSocket>
 #include <QTcpSocket>
 #include <QJsonDocument>
@@ -126,9 +127,11 @@ void TcpMgr::initHandlers() {
             return;
         }
         
-        // TODO : userMgr load userInfo
+        UserMgr::GetInstance()->SetUid(jsonObj["uid"].toInt());
+        UserMgr::GetInstance()->SetName(jsonObj["name"].toString());
+        UserMgr::GetInstance()->SetToken(jsonObj["token"].toString());
         
-        emit sig_switch_chatDlg();
+        emit TcpMgr::GetInstance()->sig_switch_chatDlg();
     };
 }
 
