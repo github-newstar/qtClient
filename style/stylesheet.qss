@@ -23,28 +23,28 @@ color:green;
 color:red;
 }
 #passVisible_[state='unvisible']{
-   border-image: url(:/res/unvisible.png);
+   border-image: url(res/unvisible.png);
 }
 #passVisible_[state='unvisible_hover']{
-   border-image: url(:/res/unvisible_hover.png);
+   border-image: url(res/unvisible_hover.png);
 }
 #passVisible_[state='visible']{
-   border-image: url(:/res/visible.png);
+   border-image: url(res/visible.png);
 }
 #passVisible_[state='visible_hover']{
-   border-image: url(:/res/visible_hover.png);
+   border-image: url(res/visible_hover.png);
 }
 #confirmPassVisible_[state='unvisible']{
-   border-image: url(:/res/unvisible.png);
+   border-image: url(res/unvisible.png);
 }
 #confirmPassVisible_[state='unvisible_hover']{
-   border-image: url(:/res/unvisible_hover.png);
+   border-image: url(res/unvisible_hover.png);
 }
 #confirmPassVisible_[state='visible']{
-   border-image: url(:/res/visible.png);
+   border-image: url(res/visible.png);
 }
 #confirmPassVisible_[state='visible_hover']{
-   border-image: url(:/res/visible_hover.png);
+   border-image: url(res/visible_hover.png);
 }
 #forgeorgetLable_[state='selected']{
 color:black;
@@ -56,13 +56,13 @@ color:rgb(42,112,141);
     background-color:rgb(46,46,46);
 }
 #addBtn_[state='normal']{
-    border-image: url(:/res/add_friend_normal.png);
+    border-image: url(res/add_friend_normal.png);
 }
 #addBtn_[state='hover']{
-    border-image: url(:/res/add_friend_hover.png);
+    border-image: url(res/add_friend_hover.png);
 }
 #addBtn_[state='press']{
-    border-image: url(:/res/add_friend_hover.png);
+    border-image: url(res/add_friend_hover.png);
 }
 #searchWid_{
    background-color:rgb(247,247,247);
@@ -129,4 +129,97 @@ QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
 }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     background: none; /* 页面滚动部分背景透明 */
+}
+
+LoadingDlg{
+    background: #f2eada;
+}
+#titleLab_{
+    font-family: "Microsoft YaHei";
+    font-size: 18px;
+    font-weight: normal;
+}
+#chatEdit_{
+    background: #ffffff;
+    border: none; /* 隐藏边框 */
+    font-family: "Microsoft YaHei"; /* 设置字体 */
+    font-size: 16px; /* 设置字体大小 */
+    padding: 5px; /* 设置内边距 */
+}
+#sendWid_{
+    background: #ffffff;
+    border: none; /* 隐藏边框 */
+}
+#addBtn_[state='normal']{
+    border-image: url(res/add_friend_normal.png);
+}
+#addBtn_[state='hover']{
+    border-image: url(res/add_friend_hover.png);
+}
+#addBtn_[state='press']{
+    border-image: url(res/add_friend_hover.png);
+}
+#recvBtn_[state='normal']{
+   background: #f0f0f0;
+   color: #2cb46e;
+   font-size: 16px; /* 设置字体大小 */
+   font-family: "Microsoft YaHei"; /* 设置字体 */
+   border-radius: 20px; /* 设置圆角 */
+}
+#recvBtn_[state='hover']{
+   background: #d2d2d2;
+   color: #2cb46e;
+   font-size: 16px; /* 设置字体大小 */
+   font-family: "Microsoft YaHei"; /* 设置字体 */
+   border-radius: 20px; /* 设置圆角 */
+}
+#recvBtn_[state='press']{
+   background: #c6c6c6;
+   color: #2cb46e;
+   font-size: 16px; /* 设置字体大小 */
+   font-family: "Microsoft YaHei"; /* 设置字体 */
+   border-radius: 20px; /* 设置圆角 */
+}
+#sendBtn_[state='normal']{
+    background: #f0f0f0;
+    color: #2cb46e;
+    font-size: 16px; /* 设置字体大小 */
+    font-family: "Microsoft YaHei"; /* 设置字体 */
+    border-radius: 20px; /* 设置圆角 */
+}
+#sendBtn_[state='hover']{
+   background: #d2d2d2;
+   color: #2cb46e;
+   font-size: 16px; /* 设置字体大小 */
+   font-family: "Microsoft YaHei"; /* 设置字体 */
+   border-radius: 20px; /* 设置圆角 */
+}
+#sendBtn_[state='press']{
+   background: #c6c6c6;
+   color: #2cb46e;
+   font-size: 16px; /* 设置字体大小 */
+   font-family: "Microsoft YaHei"; /* 设置字体 */
+   border-radius: 20px; /* 设置圆角 */
+}
+#toolWid_{
+    background: #ffffff;
+    border-bottom: 0.5px solid #ececec; /* 设置下边框颜色和宽度 */
+}
+#emo_lab_[state='normal']{
+    border-image: url(res/smile.png);
+}
+#emo_lab_[state='hover']{
+    border-image: url(res/smile_hover.png);
+}
+#emo_lab_[state='press']{
+    border-image: url(res/smile_press.png);
+}
+#file_lab_[state='normal']{
+    border-image: url(res/filedir.png);
+}
+#file_lab_[state='hover']{
+    border-image: url(res/filedir_hover.png);
+}
+#file_lab_[state='press']{
+    border-image: url(res/filedir_press.png);
 }

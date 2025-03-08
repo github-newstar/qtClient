@@ -95,6 +95,12 @@
    </item>
    <item>
     <widget class="QWidget" name="userInfoWid_" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
        <number>7</number>
@@ -120,6 +126,12 @@
       </item>
       <item>
        <widget class="QLabel" name="userChatLab_">
+        <property name="maximumSize">
+         <size>
+          <width>130</width>
+          <height>1000</height>
+         </size>
+        </property>
         <property name="text">
          <string>Hello world</string>
         </property>
@@ -159,6 +171,22 @@
       </property>
      </widget>
     </widget>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

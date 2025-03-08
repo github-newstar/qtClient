@@ -12,6 +12,7 @@ public:
     explicit ListItemBase(QWidget *parent = nullptr);
     void SetItemType(ListItemType itemType);
     ListItemType GetItemType();
+    void paintEvent(QPaintEvent *event) override;
 private:
     ListItemType itemType_;
 public slots:
