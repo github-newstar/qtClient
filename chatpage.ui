@@ -75,19 +75,19 @@
              <rect>
               <x>10</x>
               <y>10</y>
-              <width>101</width>
+              <width>130</width>
               <height>30</height>
              </rect>
             </property>
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>130</width>
               <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
+              <width>130</width>
               <height>30</height>
              </size>
             </property>
@@ -101,7 +101,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="chat_data_list_" native="true">
+       <widget class="ChatView" name="chat_data_list_" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -224,7 +224,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QTextEdit" name="chatEdit_">
+       <widget class="MessageTextEdit" name="chatEdit_">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -355,6 +355,17 @@
    <class>ClickedBtn</class>
    <extends>QPushButton</extends>
    <header location="global">clickedbtn.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ChatView</class>
+   <extends>QWidget</extends>
+   <header>chatview.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MessageTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header location="global">MessageTextEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

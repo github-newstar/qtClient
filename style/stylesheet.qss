@@ -134,10 +134,25 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
 LoadingDlg{
     background: #f2eada;
 }
-#titleLab_{
+#titleLab_ {
     font-family: "Microsoft YaHei";
-    font-size: 18px;
-    font-weight: normal;
+    font-size: 12px; /* Slightly larger font size for better prominence */
+    font-weight: bold; /* Make it bold for a stronger title appearance */
+    color: #333333; /* Darker, more readable text color */
+    background-color: #f0f0f0; /* Light gray background to make it stand out */
+    padding: 8px 15px; /* Add padding for better spacing around the text */
+    border-radius: 5px; /* Rounded corners for a softer look */
+    border: 1px solid #cccccc; /* Subtle border for definition */
+}
+
+#titleLab_:hover {
+    background-color: #e0e0e0; /* Slightly darker background on hover for a simple animation effect */
+    color: #555555; /* Slightly darker text color on hover */
+    /* You can also add other hover effects like:
+       box-shadow: 2px 2px 5px #cccccc;  (Subtle shadow on hover)
+       transform: scale(1.02);           (Slightly scale up on hover)
+       transition: all 0.2s ease-in-out; (Smooth transition for hover effects - optional, but good practice)
+    */
 }
 #chatEdit_{
     background: #ffffff;
@@ -222,4 +237,14 @@ LoadingDlg{
 }
 #file_lab_[state='press']{
     border-image: url(res/filedir_press.png);
+}
+
+#chat_data_list_{
+    background : black;
+}
+#chat_bg{
+    background : #f0f0f0;
+}
+#chat_area{
+    border : none;
 }

@@ -76,6 +76,17 @@ struct ServerInfo{
     int Uid;
 };
 
+enum class ChatRole {
+    Self,
+    Other
+};
+
+struct MsgInfo{
+    QString msgFlag;
+    QString content;    //表示文件和图像的url,文本消息
+    QPixmap pixmap;     //文件盒图像的缩略图
+};
+
 
 extern QString gate_url_prefix;
 #endif //GLOBAL_H
