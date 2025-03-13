@@ -8,6 +8,7 @@
 #include "global.h"
 #include <functional>
 #include <QTcpSocket>
+#include "userdata.h"
 
 
 class TcpMgr : public QObject, public Singleton<TcpMgr> , public std::enable_shared_from_this<TcpMgr>
@@ -40,6 +41,7 @@ signals:
     void sig_send_data(ReqId reqId, QString data);
     void sig_switch_chatDlg();
     void sig_login_failed(int errCode);
+    void sig_user_search(std::shared_ptr<SearchInfo> si);
 };
 
 #endif // TCPMHR_H

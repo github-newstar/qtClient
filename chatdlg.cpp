@@ -1,4 +1,5 @@
 #include "chatdlg.h"
+#include "statewidget.h"
 #include "loadingdlg.h"
 #include <QAction>
 #include <QRandomGenerator>
@@ -46,10 +47,26 @@ chatDlg::chatDlg(QWidget *parent) :
             // TODO 按下按钮不显示搜索框
             ShowSearch(false);
     });
-    
     connect(ui->chatUserList_, &ChatUserList::sig_loading_chat_user, this, &chatDlg::slot_loading_chat_user);
     ShowSearch(false);
     addChatUserList();
+    
+    QPixmap pixmap("res/head_1.jpg");
+    ui->side_head_lab_->setPixmap(pixmap); // 将图片设置到QLabel上
+    QPixmap scaledPixmap = pixmap.scaled( ui->side_head_lab_->size(), Qt::KeepAspectRatio); // 将图片缩放到label的大小
+    ui->side_head_lab_->setPixmap(scaledPixmap); // 将缩放后的图片设置到QLabel上
+    ui->side_head_lab_->setScaledContents(true); // 设置QLabel自动缩放图片内容以适应大小
+    ui->side_chat_lab_->setProperty("state","normal");
+    ui->side_chat_lab_->SetState("normal","hover","pressed","selected_normal","selected_hover","selected_pressed");
+    ui->side_contact_lab_->SetState("normal","hover","pressed","selected_normal","selected_hover","selected_pressed");
+    
+    AddLBGroup(ui->side_chat_lab_);
+    AddLBGroup(ui->side_contact_lab_);
+        
+    connect(ui->side_chat_lab_, &StateWidget::clicked, this, &chatDlg::slot_side_chat);
+    connect(ui->side_contact_lab_, &StateWidget::clicked, this, &chatDlg::slot_side_contact);
+    
+    connect(ui->searchEdit_, &QLineEdit::textChanged, this, &chatDlg::slot_show_search);
 }
 
 void chatDlg::ShowSearch(bool bsearch ){
@@ -114,6 +131,21 @@ void chatDlg::addChatUserList()
     }
 }
 
+void chatDlg::AddLBGroup(StateWidget* lb) {
+    lb_list_.push_back(lb);
+}
+
+void chatDlg::slot_side_chat() {
+    qDebug()<< "receive side chat clicked";
+    ClearLabelState(ui->side_chat_lab_);
+    ui->stackedWidget->setCurrentWidget(ui->chatPage_);
+    state_= ChatUIMode::ChatMode;
+    ShowSearch(false);
+}
+
+void chatDlg::slot_side_contact() {
+}
+
 void chatDlg::slot_loading_chat_user() {
     if(b_loading_){
         return;
@@ -127,4 +159,16 @@ void chatDlg::slot_loading_chat_user() {
     qDebug() << "add new data to list....";
     loadingDlg->deleteLater();
     b_loading_ = false;
+}
+
+void chatDlg::ClearLabelState(StateWidget* lb){
+    for(auto &item : lb_list_){
+        if(item == lb){
+            continue;
+        }
+        item->ClearState();
+    }
+}
+void chatDlg::slot_show_search(const QString &text){
+    ShowSearch(!text.isEmpty());
 }
