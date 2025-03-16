@@ -1,5 +1,6 @@
 #ifndef SEARCHLIST_H
 #define SEARCHLIST_H
+#include "findsuccessdlg.h"
 #include <QListWidgetItem>
 #include <QWheelEvent>
 #include <QScrollBar>

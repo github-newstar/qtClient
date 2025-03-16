@@ -36,26 +36,28 @@ file(GLOB UI_SRC "./*.ui")
       ${UI_SRC}  )
 
 target_link_libraries(chatPro PRIVATE Qt5::Widgets Qt5::Network)
-set(TargetConfig "${CMAKE_SOURCE_DIR}/config.ii")
-# 指定目标配置文件
-# 将路径中的 / 转换为 Windows 风格的 \\
-#string(REPLACE "/" "\\" TargetConfig ${TargetConfig})
+# set(TargetConfig "${CMAKE_SOURCE_DIR}/config.ii")
+# # 指定目标配置文件
+# # 将路径中的 / 转换为 Windows 风格的 \\
+# #string(REPLACE "/" "\\" TargetConfig ${TargetConfig})
 
-# 设置输出目录
-set(OutputDir "${CMAKE_BINARY_DIR}")
+# # 设置输出目录
+# set(OutputDir "${CMAKE_BINARY_DIR}")
+
+# if(NOT UNIX)
+#     # 将路径中的 / 转换为 Windows 风格的 \\
+#     string(REPLACE "/" "\\" TargetConfig ${TargetConfig})
+#     string(REPLACE "/" "\\" OutputDir ${OutputDir})
+
+#     add_custom_command(TARGET chatPro POST_BUILD
+#         COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#         "${TargetConfig}" "${OutputDir}"
+#     )
+# endif()
 
 if(NOT UNIX)
-    # 将路径中的 / 转换为 Windows 风格的 \\
-    string(REPLACE "/" "\\" TargetConfig ${TargetConfig})
-    string(REPLACE "/" "\\" OutputDir ${OutputDir})
-
-    add_custom_command(TARGET chatPro POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${TargetConfig}" "${OutputDir}"
-    )
-endif()
-
-if(NOT UNIX)
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/config.ii DESTINATION ${CMAKE_BINARY_DIR})
     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR})
     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/style DESTINATION ${CMAKE_BINARY_DIR})
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/static DESTINATION ${CMAKE_BINARY_DIR})
 endif()
