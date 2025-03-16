@@ -7,30 +7,30 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-     loginDialog_ = new LoginDialog(this);
-    loginDialog_->setWindowFlags(Qt::CustomizeWindowHint |
-                                Qt::FramelessWindowHint);
-
-    setCentralWidget(loginDialog_);
-    // chatDlg_ = new chatDlg(this);
-    // chatDlg_->setWindowFlags(Qt::CustomizeWindowHint |
+    //  loginDialog_ = new LoginDialog(this);
+    // loginDialog_->setWindowFlags(Qt::CustomizeWindowHint |
     //                             Qt::FramelessWindowHint);
-    //  this->setMinimumSize(QSize(1050, 900));
-    //  this->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
-    // setCentralWidget(chatDlg_);
-    // chatDlg_->show();
-    loginDialog_->show();
+    //
+    // setCentralWidget(loginDialog_);
+    chatDlg_ = new chatDlg(this);
+    chatDlg_->setWindowFlags(Qt::CustomizeWindowHint |
+                                Qt::FramelessWindowHint);
+     this->setMinimumSize(QSize(1050, 900));
+     this->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+    setCentralWidget(chatDlg_);
+    chatDlg_->show();
+    // loginDialog_->show();
 
     //创建和注册消息连接
-    connect(loginDialog_, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchReg);
+    // connect(loginDialog_, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchReg);
     
     //连接登录界面忘记密码信号    void SoltSwitchReset();
 
 
-    connect(loginDialog_, &LoginDialog::switchReset, this, &MainWindow::SlotSwitchReset);
+    // connect(loginDialog_, &LoginDialog::switchReset, this, &MainWindow::SlotSwitchReset);
     
     //连接登录界面登录信号
-    connect(TcpMgr::GetInstance().get(), &TcpMgr::sig_switch_chatDlg, this, &MainWindow::SlotSwitchChat);
+    // connect(TcpMgr::GetInstance().get(), &TcpMgr::sig_switch_chatDlg, this, &MainWindow::SlotSwitchChat);
 
 }
 

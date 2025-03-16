@@ -15,12 +15,16 @@ class chatDlg : public QDialog
 public:
     explicit chatDlg(QWidget *parent = nullptr);
     ~chatDlg();
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     void ShowSearch(bool bserarch = false);
     void addChatUserList();
     void AddLBGroup(StateWidget*);
     void ClearLabelState(StateWidget*);
+    void handleGlobalMousePress(QMouseEvent *event);
+
     Ui::chatDlg *ui;
     ChatUIMode mode_;
     ChatUIMode state_;

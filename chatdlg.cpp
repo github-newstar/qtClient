@@ -36,7 +36,8 @@ chatDlg::chatDlg(QWidget *parent) :
             }else{
                 clearAction->setIcon(QIcon("res/close_transparent.png"));
             }
- } );
+    } );
+            
     
     //  连接定理文本的信号和槽函数
     connect(clearAction, &QAction::triggered, [this, clearAction]{
@@ -67,22 +68,26 @@ chatDlg::chatDlg(QWidget *parent) :
     connect(ui->side_contact_lab_, &StateWidget::clicked, this, &chatDlg::slot_side_contact);
     
     connect(ui->searchEdit_, &QLineEdit::textChanged, this, &chatDlg::slot_show_search);
+    
+    // 检测鼠标点击位置判断是否要清空搜索框
+    this->installEventFilter(this);
+    ui->side_chat_lab_->SetSelected(true);
 }
 
 void chatDlg::ShowSearch(bool bsearch ){
     if(bsearch){
         ui->chatUserList_->hide();
         ui->conUserList_->hide();
-        ui->serarchList_->show();
+        ui->searchList_->show();
         mode_ = ChatUIMode::SearchMode;
     }else if(state_ == ChatUIMode::ChatMode){
         ui->chatUserList_->show();
         ui->conUserList_->hide();
-        ui->serarchList_->hide();
+        ui->searchList_->hide();
         mode_ = ChatUIMode::ChatMode;
     }else if(state_ == ChatUIMode::ContactMode){
         ui->chatUserList_->hide();
-        ui->serarchList_->hide();
+        ui->searchList_->hide();
         ui->conUserList_->show();
         mode_ = ChatUIMode::ContactMode;
     }
@@ -171,4 +176,28 @@ void chatDlg::ClearLabelState(StateWidget* lb){
 }
 void chatDlg::slot_show_search(const QString &text){
     ShowSearch(!text.isEmpty());
+}
+bool chatDlg::eventFilter(QObject *watched, QEvent *event){
+    if (event->type() == QEvent::MouseButtonPress) {
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+        handleGlobalMousePress(mouseEvent);
+     }
+     return QDialog::eventFilter(watched, event);
+}
+
+void chatDlg::handleGlobalMousePress(QMouseEvent *event) {
+    // 实现点击位置的判断和处理逻辑
+    // 先判断是否处于搜索模式，如果不处于搜索模式则直接返回
+    if( mode_!= ChatUIMode::SearchMode){
+        return;
+    }
+    // 将鼠标点击位置转换为搜索列表坐标系中的位置
+    QPoint posInSearchList = ui->searchList_->mapFromGlobal(event->globalPos());
+    // 判断点击位置是否在聊天列表的范围内
+    if (!ui->searchList_->rect().contains(posInSearchList)) {
+        // 如果不在聊天列表内，清空输入框
+        ui->searchEdit_->clear();
+        ShowSearch(false);
+    }
+    
 }
