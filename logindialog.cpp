@@ -111,6 +111,7 @@ void LoginDialog::on_loginBtn__clicked()
     auto pwd = ui->passEdit_->text();
 
     QJsonObject jsonObj;
+    jsonObj["gate_host"] = gate_host;
     jsonObj["email"] = email;
     jsonObj["passwd"] = xorString(pwd);
     HttpMgr::GetInstance()->PostHttpReq(QUrl(gate_url_prefix+"/user_login"),

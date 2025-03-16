@@ -144,14 +144,13 @@ void TcpMgr::handleMsg(ReqId id, int len, QByteArray data) {
     //调用回调函数
     iter.value()(id, len , data);
 }
-
 void TcpMgr::slot_tcp_connect(ServerInfo serverInfo) {
     qDebug()<< "receive tcp connect signal";
     // 尝试连接到服务器
     qDebug() << "Connecting to server...";
     host_ = serverInfo.Host;
     port_ = static_cast<uint16_t>(serverInfo.Port.toInt());
-    socket_.connectToHost(serverInfo.Host, port_);
+    socket_.connectToHost(host_, port_);
 }
 
 void TcpMgr::slot_send_data(ReqId reqId, QString data) {

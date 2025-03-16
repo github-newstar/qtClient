@@ -1,6 +1,7 @@
 #include "global.h"
 #include<QString>
 QString gate_url_prefix = "";
+QString gate_host = "";
 std::function<void(QWidget *)> repolish = [](QWidget *w) {
     w->style()->unpolish(w);
     w->style()->polish(w);

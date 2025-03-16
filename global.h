@@ -89,4 +89,5 @@ struct MsgInfo{
 
 
 extern QString gate_url_prefix;
+extern QString gate_host;
 #endif //GLOBAL_H
