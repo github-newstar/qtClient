@@ -2,9 +2,10 @@
   <form
     class="w-1/2 flex flex-col justify-center items-center p-4 gap-2 shadow-bottom rounded-md"
     action="#"
+    @submit.prevent="handleSubmit"
   >
     <div class="my-2 text-3xl font-semibold">
-      <h1>LOGO</h1>
+      <h1>登录</h1>
     </div>
     <!-- 邮箱 -->
     <label class="input validator">
@@ -20,7 +21,7 @@
           <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
         </g>
       </svg>
-      <input type="email" placeholder="mail@site.com" required />
+      <input v-model="email" type="email" placeholder="mail@site.com" required />
     </label>
     <div class="validator-hint hidden">请输入邮箱</div>
     <!-- 密码 -->
@@ -40,6 +41,7 @@
         </g>
       </svg>
       <input
+        v-model="password"
         type="password"
         required
         placeholder="密码"
@@ -54,7 +56,7 @@
       letter
     </p>
     <!-- 验证码 -->
-    <input type="text" placeholder="请输入验证码" class="input" />
+    <!-- <input type="text" required placeholder="请输入验证码" class="input" /> -->
 
     <!-- 记住密码 -->
     <fieldset class="fieldset p-4 bg-base-100 border border-base-300 rounded-box w-64">
@@ -69,13 +71,28 @@
     </fieldset>
 
     <!-- 按钮 -->
-    <div class="flex gap-2">
-      <button class="btn btn-outline btn-accent">登录</button>
-      <button class="btn btn-outline btn-secondary">注册</button>
+    <button class="btn btn-outline btn-accent w-full max-w-[310px]">登录</button>
+    <!-- 注册 -->
+    <div class="flex items-center justify-center gap-1">
+      <span>还没有账号？请</span>
+      <RouterLink :to="{ name: 'signup' }">
+        <span class="text-accent hover:text-green-500">注册</span>
+      </RouterLink>
     </div>
   </form>
 </template>
 
-<script setup></script>
+<script setup>
+import axios from 'axios'
+import { uid } from 'uid'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-<style lang="scss" scoped></style>
+const handleSubmit = async () => {
+  console.log('submitted!')
+  setTimeout(() => {
+    router.push('/')
+  }, 1000)
+}
+</script>

@@ -1,0 +1,57 @@
+services:
+  chatserver:
+    image: ghcr.io/github-newstar/chatserver-final:latest
+    container_name: chatserver1
+    ports:
+      - "8091:8091"
+    restart: always
+    networks:
+    - chat-net
+  gateserver:
+    image: ghcr.io/github-newstar/gateserver-final:latest
+    container_name: gateServer
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+    - chat-net
+
+  statusserver:
+    image: ghcr.io/github-newstar/statusserver-final:latest
+    container_name: statusServer
+    restart: always
+    networks:
+    - chat-net
+  varifyserver:
+    image: jojo114514/varifyserver
+    container_name: varifyServer
+    restart: always
+    networks:
+    - chat-net
+  mysql:
+    image: jojo114514/myq
+    container_name: mq
+    ports:
+        - "3306:3306"
+    volumes:
+        - "myconf:/etc/mysql/my.cnf"
+        - "mydata:/var/lib/mysql"
+        - "mylog:/logs"
+    environment:
+        - "MYSQL_ROOT_PASSWORD=123456"
+
+    restart: always
+    networks:
+    - chat-net
+
+networks:
+  chat-net:
+    driver: bridge
+volumes:
+  myconf:
+    # 你可以在这里指定卷的驱动等选项，例如：
+    # driver: local
+  mydata:
+    # driver: local
+  mylog:
+    # driver: local
