@@ -6,7 +6,7 @@ services:
       - "8091:8091"
     restart: always
     networks:
-    - chat-net
+      - chat-net
   gateserver:
     image: ghcr.io/github-newstar/gateserver-final:latest
     container_name: gateServer
@@ -14,35 +14,35 @@ services:
       - "8080:8080"
     restart: always
     networks:
-    - chat-net
+      - chat-net
 
   statusserver:
     image: ghcr.io/github-newstar/statusserver-final:latest
     container_name: statusServer
     restart: always
     networks:
-    - chat-net
+      - chat-net
   varifyserver:
     image: jojo114514/varifyserver
     container_name: varifyServer
     restart: always
     networks:
-    - chat-net
+      - chat-net
   mysql:
     image: jojo114514/myq
     container_name: mq
     ports:
-        - "3306:3306"
+      - "3306:3306"
     volumes:
-        - "myconf:/etc/mysql/my.cnf"
-        - "mydata:/var/lib/mysql"
-        - "mylog:/logs"
+      - "myconf:/etc/mysql/my.cnf"
+      - "mydata:/var/lib/mysql"
+      - "mylog:/logs"
     environment:
-        - "MYSQL_ROOT_PASSWORD=123456"
+      - "MYSQL_ROOT_PASSWORD=123456"
 
     restart: always
     networks:
-    - chat-net
+      - chat-net
 
 networks:
   chat-net:
