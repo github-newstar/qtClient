@@ -3,6 +3,9 @@ import HomeView from '../views/HomeView.vue'
 import Signup from '@/auth/Signup.vue'
 import Login from '../auth/Login.vue'
 import ChatView from '../views/ChatView.vue'
+import { useUserInfoStore } from '@/stores/UserInfo'
+import supabase from '@/utilities/supabase'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -15,6 +18,7 @@ const router = createRouter({
       path: '/chatview',
       name: 'chatView',
       component: () => import('../views/ChatView.vue'),
+      meta: { requiresAuth: true },
     },
     {
       path: '/signup',
@@ -36,6 +40,17 @@ const router = createRouter({
     //   component: () => import('../views/AboutView.vue'),
     // },
   ],
+})
+
+// 判断用户登录状态
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserInfoStore()
+  if (to.meta.requiresAuth) {
+    userStore.getUserState(next)
+  } else {
+    next()
+  }
 })
 
 export default router

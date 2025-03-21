@@ -3,7 +3,7 @@ const axios = require('axios')
 const cors = require('cors') // 引入 cors 中间件
 
 const app = express()
-const port = 3000 // 代理服务器监听的端口
+const port = 3002 // 代理服务器监听的端口
 
 // 使用 cors 中间件，允许来自前端应用的跨域请求
 // 注意：在生产环境中，你需要更精确地配置允许的源
@@ -20,13 +20,15 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // 定义一个代理路由，例如 /proxy-get-code
-app.all('/proxy-get-code', async (req, res) => {
-  const targetApiUrl = 'http://localhost:8080/get_code' // 目标 API 的完整 URL
+app.all('/proxy/*', async (req, res) => {
+  const targetBaseUrl = 'http://localhost:8080' // 目标 API 的完整 URL
+  const targetUrlPath = req.url.substring(req.url.indexOf('/proxy/') + '/proxy/'.length);
+  const targetUrl = `${targetBaseUrl}/${targetUrlPath}`;
 
   try {
     const response = await axios({
       method: req.method,
-      url: targetApiUrl,
+      url: targetUrl,
       headers: {
         ...req.headers,
         host: 'localhost:8080', // 设置目标 API 的 Host 头部

@@ -1,6 +1,44 @@
 <template>
+  <!-- alert窗口 -->
+  <div id="loginAlert">
+    <!-- 登录成功提示 -->
+    <div v-show="loginSuccess" role="alert" class="alert alert-success mb-4 ease-in duration-200">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 stroke-current"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span>登录成功！</span>
+    </div>
+    <!-- 登录失败提示 -->
+    <div v-show="loginFail" role="alert" class="alert alert-error mb-4 ease-in duration-200">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 stroke-current"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span>邮箱或密码错误</span>
+    </div>
+  </div>
+
   <form
-    class="w-1/2 flex flex-col justify-center items-center p-4 gap-2 shadow-bottom rounded-md"
+    class="w-1/2 max-w-md flex flex-col justify-center items-center p-4 gap-2 shadow-bottom rounded-md"
     action="#"
     @submit.prevent="handleSubmit"
   >
@@ -41,7 +79,7 @@
         </g>
       </svg>
       <input
-        v-model="password"
+        v-model="passwd"
         type="password"
         required
         placeholder="密码"
@@ -78,21 +116,54 @@
       <RouterLink :to="{ name: 'signup' }">
         <span class="text-accent hover:text-green-500">注册</span>
       </RouterLink>
+      <button
+        :hidden="true"
+        type="button"
+        @click="forTest"
+        class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
+      >
+        test
+      </button>
     </div>
   </form>
 </template>
 
 <script setup>
+import supabase from '@/utilities/supabase'
 import axios from 'axios'
 import { uid } from 'uid'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { errorMessages } from 'vue/compiler-sfc'
 const router = useRouter()
+
+const email = ref('')
+const passwd = ref('')
+
+const loginSuccess = ref(false)
+const loginFail = ref(false)
 
 const handleSubmit = async () => {
   console.log('submitted!')
-  setTimeout(() => {
-    router.push('/')
-  }, 1000)
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: passwd.value,
+  })
+  if (error) {
+    if (error.message === 'Invalid login credentials') {
+      loginFail.value = !loginFail.value
+    } else {
+      alert('登录失败')
+    }
+  } else {
+    loginSuccess.value = !loginSuccess.value
+    setTimeout(() => {
+      router.push({ name: 'chatView' })
+    }, 2000)
+  }
+}
+const forTest = async () => {
+  const LocalUser = await supabase.auth.getSession()
+  console.log(LocalUser)
 }
 </script>
