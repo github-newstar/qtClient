@@ -2,7 +2,10 @@
   <div>
     <div class="navbar bg-neutral text-neutral-content flex justify-between z-1">
       <RouterLink to="/">
-        <button class="btn btn-ghost text-xl">EasyChat</button>
+        <div class="flex ml-3 btn btn-ghost">
+          <img src="../icons/pageIcon.png" alt="logo" class="w-10 h-10 hover:cursor-pointer" />
+          <button class="text-xl hover:cursor-pointer">EasyChat</button>
+        </div>
       </RouterLink>
       <button v-if="userStore.username" @click="logOut" class="btn btn-link">登出</button>
       <template v-else>
